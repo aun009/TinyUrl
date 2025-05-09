@@ -26,7 +26,7 @@ pipeline {
                     // Example of using SSH to deploy   
                     def dockerCmd = "docker run -p 8080:8080 -d arun2232/spring-boot-url-shortener:1.0"
 
-                    sshagent(['docker-practice']) {
+                    sshagent(['jenkins-aws-1']) {
                         sh "ssh -o StrictHostKeyChecking=no ubuntu@15.207.100.199 ${dockerCmd}"
                     }
                 }
