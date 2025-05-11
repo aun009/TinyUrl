@@ -28,7 +28,7 @@ pipeline {
                         def dockerComposeCmd = "docker-compose -f compose.yaml up -d --build --detach"
 
                     sshagent(['jenkins-aws-1']) {
-                        sh "scp /docker/compose.yaml ubuntu@13.203.78.180:/home/ubuntu"
+                        sh "scp docker/compose.yaml ubuntu@13.203.78.180:/home/ubuntu"
                         sh "ssh -o StrictHostKeyChecking=no ubuntu@13.203.78.180 ${dockerComposeCmd}"
                     }
                 }
