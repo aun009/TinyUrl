@@ -1,3 +1,5 @@
+#!/usr/bin/env groovy
+
 pipeline {
     agent any  // Runs the pipeline on any available agent
 
@@ -25,11 +27,13 @@ pipeline {
 
                     // Example of using SSH to deploy   
 //                     def dockerCmd = "docker run -p 8080:8080 -d arun2232/spring-boot-url-shortener:latest"
-                        def dockerComposeCmd = "docker-compose -f compose.yaml up -d --build --detach"
+//                         def dockerComposeCmd = "docker-compose -f compose.yaml up -d --build --detach"
+                        def shellCmd = "bash ./server-cmd.sh"
 
                     sshagent(['jenkins-aws-1']) {
+                        sh "scp server-cmd.sh ubuntu@13.203.78.180:/home/ubuntu" // should be there on ec2
                         sh "scp docker/compose.yaml ubuntu@13.203.78.180:/home/ubuntu"
-                        sh "ssh -o StrictHostKeyChecking=no ubuntu@13.203.78.180 ${dockerComposeCmd}"
+                        sh "ssh -o StrictHostKeyChecking=no ubuntu@13.203.78.180 ${shellCmd}"
                     }
                 }
             }
